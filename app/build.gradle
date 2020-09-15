@@ -13,10 +13,33 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('aidl.keystore')
+            storePassword "sinitekaidl"
+            keyAlias "aidl.keystore"
+            keyPassword "sinitekaidl"
+            v1SigningEnabled true
+            v2SigningEnabled true//gradle2.2以上默认开启v2签名
+        }
+        debug {
+            storeFile file('aidl.keystore')
+            storePassword "sinitekaidl"
+            keyAlias "aidl.keystore"
+            keyPassword "sinitekaidl"
+            v1SigningEnabled true
+            v2SigningEnabled true//gradle2.2以上默认开启v2签名
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
